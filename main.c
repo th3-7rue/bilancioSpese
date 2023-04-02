@@ -492,7 +492,13 @@ int main()
         case 3:
             printf("\n--- STATISTICHE PERSONALI IN UN PERIODO ---\n\n");
             int giornoMin, giornoMax;
-            scanf("%s %d %d", cf, &giornoMin, &giornoMax);
+            printf("Inserisci codice fiscale: ");
+            scanf("%s", cf);
+            printf("Inserisci primo giorno intervallo: ");
+            scanf("%d", &giornoMin);
+            printf("Inserisci ultimo giorno intervallo: ");
+            scanf("%d", &giornoMax);
+
             statisticheUtente(cf, elenco, giornoMin, giornoMax);
             break;
 
