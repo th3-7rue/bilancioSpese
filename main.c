@@ -2,9 +2,10 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
-
+#include <stdbool.h>
 #define NMAXMOVIMENTI 100
 #define NMAXUTENTI 100
+bool errore = false;
 
 struct movimento
 {
@@ -263,7 +264,7 @@ void statisticheUtente(char CF[], struct utente elenco[], int giornoMin, int gio
         }
     }
 
-    printf("Statistica personali per %s %s\n", ptrUtente->nome, ptrUtente->cognome);
+    printf("Statistiche personali per %s %s\n", ptrUtente->nome, ptrUtente->cognome);
     printf("Periodo: %d - %d\n", giornoMin, giornoMax);
     printf("Numero di entrate: %d\n", countEntrate);
     printf("Numero di uscite: %d\n", countUscite);
@@ -495,10 +496,22 @@ int main()
             printf("Inserisci codice fiscale: ");
             scanf("%s", cf);
             printf("Inserisci primo giorno intervallo: ");
-            scanf("%d", &giornoMin);
+            while (scanf("%d", &giornoMin) != 1 || giornoMin < 1 || giornoMin > 366)
+            {
+                printf("Input non valido. Inserisci un numero compreso tra 1 e 366: ");
+                // svuota il buffer di input
+                while (getchar() != '\n')
+                    ;
+            }
             printf("Inserisci ultimo giorno intervallo: ");
             scanf("%d", &giornoMax);
-
+            while (scanf("%d", &giornoMax) != 1 || giornoMax < 1 || giornoMax > 366 || giornoMax < giornoMin)
+            {
+                printf("Input non valido. Inserisci un numero compreso tra %d e 366: ", giornoMin);
+                // svuota il buffer di input
+                while (getchar() != '\n')
+                    ;
+            }
             statisticheUtente(cf, elenco, giornoMin, giornoMax);
             break;
 
