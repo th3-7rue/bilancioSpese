@@ -327,7 +327,7 @@ struct movimento aggiungiMovimento(struct utente *ptrUtente)
 
     printf("Inserisci la motivazione: ");
     scanf("%s", motivazione);
-    convertiInMaiuscolo(&motivazione);
+    convertiInMaiuscolo(motivazione);
 
     // setta il tipo del movimento
     if (tipoMovimento == 'E')
@@ -397,24 +397,24 @@ void inserisciNuovoUtente(struct utente elencoUtenti[], int *numUtenti)
     printf("Inserisci i dati del nuovo utente:\n");
     printf("Nome: ");
     scanf("%s", &nuovoUtente.nome);
-    convertiInMaiuscolo(&nuovoUtente.nome);
+    convertiInMaiuscolo(nuovoUtente.nome);
     printf("Cognome: ");
     scanf("%s", &nuovoUtente.cognome);
-    convertiInMaiuscolo(&nuovoUtente.cognome);
+    convertiInMaiuscolo(nuovoUtente.cognome);
 
     printf("Codice fiscale: ");
     scanf("%s", &nuovoUtente.codice_fiscale);
-    convertiInMaiuscolo(&nuovoUtente.codice_fiscale);
+    convertiInMaiuscolo(nuovoUtente.codice_fiscale);
 
     printf("Età: ");
     scanf("%d", &nuovoUtente.eta);
     printf("Città di residenza: ");
     scanf("%s", &nuovoUtente.citta_residenza);
-    convertiInMaiuscolo(&nuovoUtente.citta_residenza);
+    convertiInMaiuscolo(nuovoUtente.citta_residenza);
 
     printf("Provincia di residenza: ");
     scanf("%s", &nuovoUtente.provincia_residenza);
-    convertiInMaiuscolo(&nuovoUtente.provincia_residenza);
+    convertiInMaiuscolo(nuovoUtente.provincia_residenza);
 
     nuovoUtente.nrMovimenti = 0; // il nuovo utente non ha ancora effettuato movimenti
 
