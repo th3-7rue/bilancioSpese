@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #define NMAXMOVIMENTI 100
 #define NMAXUTENTI 100
@@ -444,7 +445,6 @@ void inserisciNuovoUtente(struct utente elencoUtenti[], int numUtenti)
     printf("Nuovo utente inserito con successo!\n");
 }
 
-#include <stdlib.h>
 int main()
 {
     int scelta;
