@@ -25,9 +25,8 @@ struct utente
     int nrMovimenti;
     struct movimento movimenti_effettuati[NMAXMOVIMENTI];
 };
-void convertiInMaiuscolo(char stringa[])
+void convertiInMaiuscolo(char *p)
 {
-    char *p = stringa;
     while (*p)
     {
         *p = toupper(*p);
