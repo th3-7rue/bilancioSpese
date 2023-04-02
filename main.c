@@ -339,7 +339,10 @@ struct movimento aggiungiMovimento(struct utente *ptrUtente)
         nuovoMovimento.tipologia = 'U';
     }
     else
+    {
+        printf("Movimento non valido");
         return;
+    }
     // setta l'importo del movimento
     nuovoMovimento.importo = importo;
     if (data < 367 && data > 0)
