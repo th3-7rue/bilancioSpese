@@ -25,7 +25,15 @@ struct utente
     int nrMovimenti;
     struct movimento movimenti_effettuati[NMAXMOVIMENTI];
 };
-
+void convertiInMaiuscolo(char stringa[])
+{
+    char *p = stringa;
+    while (*p)
+    {
+        *p = toupper(*p);
+        p++;
+    }
+}
 int caricaMovimenti(char percorsoFile[], char codice_fiscale[], struct movimento movimenti[])
 {
     FILE *file;
@@ -44,7 +52,7 @@ int caricaMovimenti(char percorsoFile[], char codice_fiscale[], struct movimento
     }
 
     // leggi i movimenti dal file
-    while (fscanf(file, "%s %s %f %d %100s", cf, &movimento_corrente.tipologia, &movimento_corrente.importo,
+    while (fscanf(file, "%s %c %f %d %100s", cf, &movimento_corrente.tipologia, &movimento_corrente.importo,
                   &movimento_corrente.data, movimento_corrente.motivazione) == 5)
     {
         // verifica se il CF corrisponde a quello cercato
@@ -311,7 +319,7 @@ struct movimento aggiungiMovimento(struct utente *ptrUtente)
     char motivazione[100];
     printf("Inserisci tipo movimento (E=Entrata, U=Uscita): ");
     scanf(" %c", &tipoMovimento);
-
+    convertiInMaiuscolo(&tipoMovimento);
     printf("Inserisci importo: ");
     scanf("%f", &importo);
 
@@ -320,6 +328,7 @@ struct movimento aggiungiMovimento(struct utente *ptrUtente)
 
     printf("Inserisci la motivazione: ");
     scanf("%s", motivazione);
+    convertiInMaiuscolo(&motivazione);
 
     // setta il tipo del movimento
     if (tipoMovimento == 'E')
@@ -330,13 +339,16 @@ struct movimento aggiungiMovimento(struct utente *ptrUtente)
     {
         nuovoMovimento.tipologia = 'U';
     }
-
+    else
+        return;
     // setta l'importo del movimento
     nuovoMovimento.importo = importo;
     if (data < 367 && data > 0)
     {
         nuovoMovimento.data = data;
     }
+    else
+        return;
     strcpy(nuovoMovimento.motivazione, motivazione);
     motivazione[strcspn(motivazione, "\n")] = '\0';
 
@@ -380,46 +392,35 @@ void anzianitaUtenti(struct utente utenti[])
 
     free(conteggiEta);
 }
-int contaUtenti()
-{
-    int num_utenti = 0;
-    char buffer[1024];
-    FILE *fp = fopen("utenti.txt", "r");
-
-    if (fp == NULL)
-    {
-        // Errore nell'apertura del file
-        exit(1);
-    }
-
-    while (fgets(buffer, 1024, fp) != NULL)
-    {
-        num_utenti++;
-    }
-
-    fclose(fp);
-    return num_utenti;
-}
-void inserisciNuovoUtente(struct utente elencoUtenti[], int numUtenti)
+void inserisciNuovoUtente(struct utente elencoUtenti[], int *numUtenti)
 {
     struct utente nuovoUtente;
     printf("Inserisci i dati del nuovo utente:\n");
     printf("Nome: ");
-    scanf("%s", nuovoUtente.nome);
+    scanf("%s", &nuovoUtente.nome);
+    convertiInMaiuscolo(&nuovoUtente.nome);
     printf("Cognome: ");
-    scanf("%s", nuovoUtente.cognome);
+    scanf("%s", &nuovoUtente.cognome);
+    convertiInMaiuscolo(&nuovoUtente.cognome);
+
     printf("Codice fiscale: ");
-    scanf("%s", nuovoUtente.codice_fiscale);
+    scanf("%s", &nuovoUtente.codice_fiscale);
+    convertiInMaiuscolo(&nuovoUtente.codice_fiscale);
+
     printf("Età: ");
     scanf("%d", &nuovoUtente.eta);
     printf("Città di residenza: ");
-    scanf("%s", nuovoUtente.citta_residenza);
+    scanf("%s", &nuovoUtente.citta_residenza);
+    convertiInMaiuscolo(&nuovoUtente.citta_residenza);
+
     printf("Provincia di residenza: ");
-    scanf("%s", nuovoUtente.provincia_residenza);
+    scanf("%s", &nuovoUtente.provincia_residenza);
+    convertiInMaiuscolo(&nuovoUtente.provincia_residenza);
+
     nuovoUtente.nrMovimenti = 0; // il nuovo utente non ha ancora effettuato movimenti
 
     // controlla se il codice fiscale del nuovo utente è già presente
-    for (int i = 0; i < numUtenti; i++)
+    for (int i = 0; i < *numUtenti; i++)
     {
         if (strcmp(nuovoUtente.codice_fiscale, elencoUtenti[i].codice_fiscale) == 0)
         {
@@ -429,7 +430,7 @@ void inserisciNuovoUtente(struct utente elencoUtenti[], int numUtenti)
     }
 
     // se il codice fiscale non è presente, inserisce il nuovo utente in fondo all'array
-    elencoUtenti[numUtenti] = nuovoUtente;
+    elencoUtenti[*numUtenti] = nuovoUtente;
 
     // aggiorna il file utenti.txt con il nuovo utente
     FILE *fp = fopen("utenti.txt", "a");
@@ -450,7 +451,7 @@ int main()
 {
     int scelta;
     struct utente elenco[NMAXUTENTI];
-    caricaUtenti("utenti.txt", elenco);
+    int nUtenti = caricaUtenti("utenti.txt", elenco);
     char input[10];
     do
     {
@@ -505,7 +506,7 @@ int main()
 
         case 6:
             printf("\n--- INSERIMENTO NUOVO UTENTE ---\n\n");
-            inserisciNuovoUtente(elenco, contaUtenti());
+            inserisciNuovoUtente(elenco, &nUtenti);
             break;
 
         case 7:
