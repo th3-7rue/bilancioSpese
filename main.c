@@ -350,7 +350,10 @@ struct movimento aggiungiMovimento(struct utente *ptrUtente)
         nuovoMovimento.data = data;
     }
     else
+    {
+        printf("Data non valida");
         return;
+    }
     strcpy(nuovoMovimento.motivazione, motivazione);
     motivazione[strcspn(motivazione, "\n")] = '\0';
 
