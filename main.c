@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #define NMAXMOVIMENTI 100
 #define NMAXUTENTI 100
