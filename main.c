@@ -208,7 +208,7 @@ float calcolaMedia(float *valori, int numValori)
 
 float calcolaMinimo(float *valori, int numValori)
 {
-    float minimo = 0;
+    float minimo = valori[0];
     for (int i = 0; i < numValori; i++)
     {
         if (valori[i] < minimo)
