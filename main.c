@@ -150,9 +150,10 @@ void stampaUtente(struct utente *ptrUtente)
 
 void stampaElencoUtenti(struct utente utenti[])
 {
-    for (int i = 0; i < caricaUtenti("utenti.txt", utenti); i++)
+    int numUtenti = caricaUtenti("utenti.txt", utenti);
+    for (int i = 0; i < numUtenti; i++)
     {
-        stampaUtente(utenti);
+        stampaUtente(&utenti[i]);
     }
 }
 
