@@ -452,6 +452,18 @@ void inserisciNuovoUtente(struct utente elencoUtenti[], int *numUtenti)
 
     printf("Nuovo utente inserito con successo!\n");
 }
+int verificaCodiceFiscale(const char *cf)
+{
+    int i;
+    int len = strlen(cf);
+
+    // Controllo lunghezza codice fiscale
+    if (len != 16)
+    {
+        return 0;
+    }
+    return 1;
+}
 
 int main()
 {
@@ -495,7 +507,14 @@ int main()
             printf("\n--- STATISTICHE PERSONALI IN UN PERIODO ---\n\n");
             int giornoMin, giornoMax;
             printf("Inserisci codice fiscale: ");
-            scanf("%s", cf);
+            while (scanf("%s", cf) != 1 || !verificaCodiceFiscale(cf))
+            {
+                printf("Codice fiscale non valido. Inserisci un codice fiscale valido: ");
+                // svuota il buffer di input
+                while (getchar() != '\n')
+                    ;
+            }
+
             printf("Inserisci primo giorno intervallo: ");
             while (scanf("%d", &giornoMin) != 1 || giornoMin < 1 || giornoMin > 366)
             {
@@ -516,7 +535,14 @@ int main()
         case 4:
             printf("\n--- INSERIMENTO NUOVO MOVIMENTO ---\n\n");
             printf("Inserisci codice fiscale: ");
-            scanf("%s", cf);
+            while (scanf("%s", cf) != 1 || !verificaCodiceFiscale(cf))
+            {
+                printf("Codice fiscale non valido. Inserisci un codice fiscale valido: ");
+                // svuota il buffer di input
+                while (getchar() != '\n')
+                    ;
+            }
+
             scriviMovimentoSuFile("movimenti.txt", aggiungiMovimento(cercaUtente(cf, elenco)));
             printf("Movimento aggiunto con successo\n");
             break;
