@@ -329,7 +329,6 @@ struct movimento aggiungiMovimento(struct utente *ptrUtente)
 
     printf("Inserisci la motivazione: ");
     scanf("%s", motivazione);
-    convertiInMaiuscolo(motivazione);
 
     // setta il tipo del movimento
     if (tipoMovimento == 'E')
