@@ -140,10 +140,10 @@ void stampaUtente(struct utente *ptrUtente)
     printf("Movimenti:\n");
     for (int j = 0; j < ptrUtente->nrMovimenti; j++)
     {
-        printf("%d) Tipologia: %c, Importo: %.2f, Data: %d, Motivazione: %s\n",
+        printf("%d) Tipologia: %c, Data: %d, Importo: %.2f, Motivazione: %s\n",
                j + 1, ptrUtente->movimenti_effettuati[j].tipologia,
-               ptrUtente->movimenti_effettuati[j].importo,
                ptrUtente->movimenti_effettuati[j].data,
+               ptrUtente->movimenti_effettuati[j].importo,
                ptrUtente->movimenti_effettuati[j].motivazione);
     }
 }
