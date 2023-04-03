@@ -308,12 +308,6 @@ void scriviMovimentoSuFile(char percorso[], struct movimento nuovoMovimento)
 
 struct movimento aggiungiMovimento(struct utente *ptrUtente)
 {
-    if (ptrUtente == NULL)
-    {
-        printf("Errore\n");
-        return;
-    }
-
     struct movimento nuovoMovimento;
     char tipoMovimento;
     float importo;
