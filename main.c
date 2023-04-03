@@ -283,9 +283,9 @@ void statisticheUtente(char CF[], struct utente elenco[], int giornoMin, int gio
         float mediaUscite = calcolaMedia(uscite, countUscite);
         float minimoUscite = calcolaMinimo(uscite, countUscite);
         float massimoUscite = calcolaMassimo(uscite, countUscite);
-        printf("Media entrate: %.2f\n", mediaUscite);
-        printf("Valore minimo entrate: %.2f\n", minimoUscite);
-        printf("Valore massimo entrate: %.2f\n", massimoUscite);
+        printf("Media uscite: %.2f\n", mediaUscite);
+        printf("Valore minimo uscite: %.2f\n", minimoUscite);
+        printf("Valore massimo uscite: %.2f\n", massimoUscite);
     }
 }
 char cf[17];
@@ -502,17 +502,14 @@ int main()
             {
                 printf("Input non valido. Inserisci un numero compreso tra 1 e 366: ");
                 // svuota il buffer di input
-                while (getchar() != '\n')
-                    ;
+                fflush(stdin);
             }
             printf("Inserisci ultimo giorno intervallo: ");
-            scanf("%d", &giornoMax);
             while (scanf("%d", &giornoMax) != 1 || giornoMax < 1 || giornoMax > 366 || giornoMax < giornoMin)
             {
                 printf("Input non valido. Inserisci un numero compreso tra %d e 366: ", giornoMin);
                 // svuota il buffer di input
-                while (getchar() != '\n')
-                    ;
+                fflush(stdin);
             }
             statisticheUtente(cf, elenco, giornoMin, giornoMax);
             break;
