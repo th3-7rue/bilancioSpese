@@ -458,13 +458,7 @@ int main()
 {
     int scelta;
     struct utente elenco[NMAXUTENTI];
-    struct movimento movimenti[NMAXMOVIMENTI];
     int nUtenti = caricaUtenti("utenti.txt", elenco);
-    int nMovimenti[NMAXMOVIMENTI];
-    for (int i = 0; i < nUtenti; i++)
-    {
-        nMovimenti[i] = caricaMovimenti("movimenti.txt", elenco[i].codice_fiscale, movimenti);
-    }
 
     char input[10];
     do
