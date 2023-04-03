@@ -26,6 +26,7 @@ struct utente
     int nrMovimenti;
     struct movimento movimenti_effettuati[NMAXMOVIMENTI];
 };
+int verificaCodiceFiscale(const char *cf);
 void convertiInMaiuscolo(char *p)
 {
     while (*p)
@@ -366,7 +367,7 @@ void anzianitaUtenti(struct utente utenti[])
     int max_eta = utenti[0].eta;
 
     // Trova l'età minima e massima tra gli utenti
-    for (int i = 1; i < NMAXUTENTI; i++)
+    for (int i = 1; i < caricaUtenti("utenti.txt", utenti); i++)
     {
         if (utenti[i].eta < min_eta)
         {
@@ -398,6 +399,21 @@ void anzianitaUtenti(struct utente utenti[])
 
     free(conteggiEta);
 }
+bool verificaProvincia(char provincia[])
+{
+    char province[][3] = {"AG", "AL", "AN", "AO", "AQ", "AR", "AP", "AT", "AV", "BA", "BT", "BL", "BN", "BG", "BI", "BO", "BZ", "BS", "BR", "CA", "CL", "CB", "CE", "CT", "CZ", "CH", "CO", "CS", "CR", "KR", "CN", "EN", "FM", "FE", "FI", "FG", "FC", "FR", "GE", "GO", "GR", "IM", "IS", "SP", "LT", "LE", "LC", "LI", "LO", "LU", "MC", "MN", "MS", "MT", "VS", "ME", "MI", "MO", "MB", "NA", "NO", "NU", "OG", "OT", "OR", "PD", "PA", "PR", "PV", "PG", "PU", "PE", "PC", "PI", "PT", "PN", "PZ", "PO", "RG", "RA", "RC", "RE", "RI", "RN", "RM", "RO", "SA", "VS", "SS", "SV", "SI", "SR", "SO", "TA", "TE", "TR", "TO", "OG", "TP", "TN", "TV", "TS", "UD", "VA", "VE", "VB", "VC", "VR", "VV", "VI", "VT"};
+
+    int i;
+    for (i = 0; i < 110; i++)
+    {
+        if (strcmp(provincia, province[i]) == 0)
+        {
+            return true; // la provincia è valida
+        }
+    }
+
+    return false; // la provincia non è valida
+}
 void inserisciNuovoUtente(struct utente elencoUtenti[], int *numUtenti)
 {
     struct utente nuovoUtente;
@@ -411,6 +427,12 @@ void inserisciNuovoUtente(struct utente elencoUtenti[], int *numUtenti)
 
     printf("Codice fiscale: ");
     scanf("%s", &nuovoUtente.codice_fiscale);
+    while (!verificaCodiceFiscale(nuovoUtente.codice_fiscale))
+    {
+        printf("Codice fiscale non valido. Inserisci un codice fiscale valido: ");
+        scanf("%s", &nuovoUtente.codice_fiscale);
+    }
+
     convertiInMaiuscolo(nuovoUtente.codice_fiscale);
 
     printf("Età: ");
@@ -422,6 +444,13 @@ void inserisciNuovoUtente(struct utente elencoUtenti[], int *numUtenti)
     printf("Provincia di residenza: ");
     scanf("%s", &nuovoUtente.provincia_residenza);
     convertiInMaiuscolo(nuovoUtente.provincia_residenza);
+
+    while (!verificaProvincia(nuovoUtente.provincia_residenza))
+    {
+        printf("Provincia non valida. Inserisci una provincia valida: ");
+        scanf("%s", &nuovoUtente.provincia_residenza);
+        convertiInMaiuscolo(nuovoUtente.provincia_residenza);
+    }
 
     nuovoUtente.nrMovimenti = 0; // il nuovo utente non ha ancora effettuato movimenti
 
