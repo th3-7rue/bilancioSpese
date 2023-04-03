@@ -52,8 +52,8 @@ int caricaMovimenti(char percorsoFile[], char codice_fiscale[], struct movimento
     }
 
     // leggi i movimenti dal file
-    while (fscanf(file, "%s %c %f %d %100s", cf, &movimento_corrente.tipologia, &movimento_corrente.importo,
-                  &movimento_corrente.data, movimento_corrente.motivazione) == 5)
+    while (fscanf(file, "%s %c %d %f %[^\n]", cf, &movimento_corrente.tipologia, &movimento_corrente.data, &movimento_corrente.importo,
+                  movimento_corrente.motivazione) == 5)
     {
         // verifica se il CF corrisponde a quello cercato
         if (strcmp(cf, codice_fiscale) == 0)
