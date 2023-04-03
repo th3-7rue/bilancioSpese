@@ -176,7 +176,7 @@ float saldoMovimenti(struct movimento movimenti[], int nmMovimentiUtente)
 
 void stampaSaldoUtenti(struct utente utenti[])
 {
-    for (int i = 0; i < NMAXUTENTI; i++)
+    for (int i = 0; i < caricaUtenti("utenti.txt", utenti); i++)
     {
         printf("Utente %d - %s %s:\n", i + 1, utenti[i].nome, utenti[i].cognome);
         float saldo = saldoMovimenti(utenti[i].movimenti_effettuati, utenti[i].nrMovimenti);
