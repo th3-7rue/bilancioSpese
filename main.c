@@ -236,11 +236,6 @@ float calcolaMassimo(float *valori, int numValori)
 void statisticheUtente(char CF[], struct utente elenco[], int giornoMin, int giornoMax)
 {
     struct utente *ptrUtente = cercaUtente(CF, elenco);
-    if (ptrUtente == NULL)
-    {
-        printf("Utente non trovato.\n");
-        return;
-    }
 
     int numMovimenti = ptrUtente->nrMovimenti;
     float entrate[numMovimenti];
@@ -532,6 +527,12 @@ int main()
                 printf("Codice fiscale non valido. Inserisci un codice fiscale valido: ");
                 // svuota il buffer di input
                 fflush(stdin);
+            }
+            convertiInMaiuscolo(cf);
+            if (cercaUtente(cf, elenco) == NULL)
+            {
+                printf("Utente non trovato");
+                break;
             }
 
             printf("Inserisci primo giorno intervallo: ");
