@@ -324,14 +324,14 @@ struct movimento aggiungiMovimento(struct utente *ptrUtente)
     convertiInMaiuscolo(&tipoMovimento);
     while (tipoMovimento != 'E' && tipoMovimento != 'U')
     {
-        printf("Data non valida. Inserisci una data valida: ");
+        printf("Tipologia non valida. Inserisci una tipologia valida: ");
         scanf(" %c", &tipoMovimento);
         convertiInMaiuscolo(&tipoMovimento);
     }
 
     printf("Inserisci importo: ");
     scanf("%f", &importo);
-
+    nuovoMovimento.importo = importo;
     printf("Inserisci la data: ");
     while (scanf("%d", &data) != 1 || data < 1 || data > 366)
     {
@@ -339,7 +339,7 @@ struct movimento aggiungiMovimento(struct utente *ptrUtente)
         // svuota il buffer di input
         fflush(stdin);
     }
-
+    nuovoMovimento.data = data;
     printf("Inserisci la motivazione: ");
     scanf("%s", motivazione);
 
