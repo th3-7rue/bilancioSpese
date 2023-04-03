@@ -322,11 +322,23 @@ struct movimento aggiungiMovimento(struct utente *ptrUtente)
     printf("Inserisci tipo movimento (E=Entrata, U=Uscita): ");
     scanf(" %c", &tipoMovimento);
     convertiInMaiuscolo(&tipoMovimento);
+    while (tipoMovimento != 'E' && tipoMovimento != 'U')
+    {
+        printf("Data non valida. Inserisci una data valida: ");
+        scanf(" %c", &tipoMovimento);
+        convertiInMaiuscolo(&tipoMovimento);
+    }
+
     printf("Inserisci importo: ");
     scanf("%f", &importo);
 
     printf("Inserisci la data: ");
-    scanf("%d", &data);
+    while (scanf("%d", &data) != 1 || data < 1 || data > 366)
+    {
+        printf("Data non valida. Inserisci una data valida: ");
+        // svuota il buffer di input
+        fflush(stdin);
+    }
 
     printf("Inserisci la motivazione: ");
     scanf("%s", motivazione);
@@ -336,26 +348,11 @@ struct movimento aggiungiMovimento(struct utente *ptrUtente)
     {
         nuovoMovimento.tipologia = 'E';
     }
-    else if (tipoMovimento == 'U')
+    else
     {
         nuovoMovimento.tipologia = 'U';
     }
-    else
-    {
-        printf("Movimento non valido");
-        return;
-    }
-    // setta l'importo del movimento
-    nuovoMovimento.importo = importo;
-    if (data < 367 && data > 0)
-    {
-        nuovoMovimento.data = data;
-    }
-    else
-    {
-        printf("Data non valida");
-        return;
-    }
+
     strcpy(nuovoMovimento.motivazione, motivazione);
     motivazione[strcspn(motivazione, "\n")] = '\0';
 
@@ -540,8 +537,7 @@ int main()
             {
                 printf("Codice fiscale non valido. Inserisci un codice fiscale valido: ");
                 // svuota il buffer di input
-                while (getchar() != '\n')
-                    ;
+                fflush(stdin);
             }
 
             printf("Inserisci primo giorno intervallo: ");
