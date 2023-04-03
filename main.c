@@ -561,6 +561,12 @@ int main()
                 while (getchar() != '\n')
                     ;
             }
+            convertiInMaiuscolo(cf);
+            if (cercaUtente(cf, elenco) == NULL)
+            {
+                printf("Utente non trovato");
+                break;
+            }
 
             scriviMovimentoSuFile("movimenti.txt", aggiungiMovimento(cercaUtente(cf, elenco)));
             printf("Movimento aggiunto con successo\n");
